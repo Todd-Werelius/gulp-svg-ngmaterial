@@ -51,7 +51,7 @@ module.exports = function (config) {
     if (!fileName) {
       fileName = path.basename(file.base);
       if (fileName === '.' || !fileName) {
-        fileName = 'svgstore.svg'
+        fileName = 'iconset.svg'
       } else {
         fileName = fileName.split(path.sep).shift() + '.svg'
       }
