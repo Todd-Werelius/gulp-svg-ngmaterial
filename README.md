@@ -30,7 +30,7 @@ The following script will combine all svg sources into a icon set file with `<sy
 
 The `id` attribute of the `<g>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
-The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained withing /somedir/src then the file would be `src.svg`, this can be overriden using options
+The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`, this can be overriden using options
 
 If you have id collisions you can pass the svg files through [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
 to minify the svg and ensure unique ids.
