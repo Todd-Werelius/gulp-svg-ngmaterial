@@ -16,7 +16,7 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 
 ### Options:
 
-* output filename - if undefined the name of base directory of the first file found
+* filename - name of resulting icon set file, if undefined the name of base directory of the first file found
 * removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
 
 ```js
