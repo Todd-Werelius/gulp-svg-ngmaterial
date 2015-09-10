@@ -16,21 +16,26 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 
 ### Options:
 
-The following options are set automatically based on file data:
+* output filename - if undefined the name of base directory of the first file found
+* removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
 
-* `id` attribute of the `<g>` element is set to the name of corresponding file;
-
-Available options:
-* filename - if undefined the name of base directory of the first file found
-* removeViewBox — setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
+```js
+    {
+        filename      : string,
+        removeViewBox : boolean
+    }
+```
 
 ## Usage
 
+
 The following script will combine all svg sources into a single svg file with `<symbol>` elements converted to `<g>` elements which will then be contained within the `<defs> </defs>` container. 
 
-The name of the resulting svg file will be the base directory name of the first file. A `.svg` suffix will be added e.g `src.svg`
+The `id` attribute of the `<g>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
-Additionally you may pass results through [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
+The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained withing /somedir/src then the file would be `src.svg`, this can be overriden using options
+
+If you have id collisions you can pass the svg files through [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
 to minify the svg and ensure unique ids.
 
 ```js
