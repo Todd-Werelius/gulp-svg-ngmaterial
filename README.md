@@ -10,7 +10,7 @@ This primarily means for each svg file ...
 
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
-If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that gulp-svg-ngmaterial was based on
+If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on
 
 NOTE: Tests are not functioning yet, I will get around to this shortly ( which may mean a week or a year ) 
 
