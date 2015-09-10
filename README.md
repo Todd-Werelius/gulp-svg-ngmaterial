@@ -1,7 +1,7 @@
 gulp-svg-ngmaterial 
 =============
 
-Combines Angular Material svg files into an icon set compatible with the Angular Material frameworks $mdIconProvider service.
+Combines Angular Material svg files into an icon set compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
 
 This primarily means for each svg file ...  
 * Stripping all extraneous container information
