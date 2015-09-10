@@ -1,7 +1,7 @@
 {
   "name": "gulp-svg-ngmaterial",
   "version": "1.0.0",
-  "description": "Combines svg files into an icon set for use with the AngularJS Material Frameworks $mdIconProvider service",
+  "description": "Combines svg files into an icon set specfically for use with the AngularJS Material Frameworks $mdIconProvider service",
   "main": "index.js",
   "files": [
     "index.js"
@@ -38,9 +38,13 @@
     "wd": "^0.3.4"
   },
   "keywords": [
+    "gulp",
     "gulpplugin",
     "svg",
-    "icon",
-    "sprite"
+    "combine svg",
+    "icon set",
+    "angularjs",
+    "angular material",
+    "$mdIconProvider"
   ]
 }
