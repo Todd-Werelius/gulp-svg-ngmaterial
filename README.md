@@ -20,10 +20,7 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 * removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
 
 ```js
-    {
-        filename      : string,
-        removeViewBox : boolean
-    }
+    { filename  : string (defaults to undefined ), removeViewBox : boolean (defaults to flase)}
 ```
 
 ## Usage
