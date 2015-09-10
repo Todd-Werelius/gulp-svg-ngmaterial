@@ -1,0 +1,46 @@
+{
+  "name": "gulp-svg-ngmaterial",
+  "version": "1.0.0",
+  "description": "Combines svg files into an icon set for use with the AngularJS Material Frameworks $mdIconProvider service",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Todd-Werelius/gulp-svg-ngmaterial"
+  },
+  "author": {
+    "name": "Todd Werelius",
+    "email": "todd.werelius@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Todd-Werelius/gulp-svg-ngmaterial/issues"
+  },
+  "homepage": "https://github.com/Todd-Werelius/gulp-svg-ngmaterial",
+  "dependencies": {
+    "cheerio": "0.*",
+    "gulp-util": "^3.0.0"
+  },
+  "devDependencies": {
+    "connect": "^3.1.0",
+    "gm": "^1.18.1",
+    "gulp": "^3.6.2",
+    "gulp-cheerio": "^0.6.2",
+    "gulp-inject": "^1.0.1",
+    "gulp-mocha": "^2.1.0",
+    "serve-static": "^1.9.3",
+    "tmp": "0.0.26",
+    "wd": "^0.3.4"
+  },
+  "keywords": [
+    "gulpplugin",
+    "svg",
+    "icon",
+    "sprite"
+  ]
+}
