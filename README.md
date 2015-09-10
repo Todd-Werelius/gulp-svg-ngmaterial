@@ -26,7 +26,7 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 ## Usage
 
 
-The following script will combine all svg sources into a single svg file with `<symbol>` elements converted to `<g>` elements which will then be contained within the `<defs> </defs>` container. 
+The following script will combine all svg sources into a icon set file with `<symbol>` elements converted to `<g>` elements which will then be contained within the `<defs> </defs>` container. 
 
 The `id` attribute of the `<g>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
