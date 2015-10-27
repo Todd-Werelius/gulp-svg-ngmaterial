@@ -5,8 +5,10 @@ Combines Angular Material svg files into an icon set compatible with the Angular
 
 This primarily means for each svg file ...  
 * Stripping all extraneous container information
-* Converting the `<symbol>`elements to `<g>` elements
+* Converting `<symbol>`elements to `<g>` elements
 * Placing all converted `<g>`elements into a `<defs> </defs>` container.  
+
+NOTE: `<symbol>` elements should be supported since they are more flexible, I have open an issue about this at Angular Material. 
 
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
@@ -17,7 +19,9 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 ### Options:
 
 * filename - name of resulting icon set file, if undefined the name of base directory of the first file found
-* removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
+* removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present
+
+NOTE: viewBox attributes on `<g>` elements are ignored, so the second option is irrelevant at the moment, if the team producing Angular Materila decides to use the superior ( IMHO ) `<symbol>` element then it might be useful, for now it's just a useless option
 
 ```js
     { filename  : string (defaults to undefined ), removeViewBox : boolean (defaults to false)}
@@ -221,5 +225,5 @@ gulp.task('metadata', function () {
 ```
 
 ## Changelog
-
+Added note about viewBox usage 
 
