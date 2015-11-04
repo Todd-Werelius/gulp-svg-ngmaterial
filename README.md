@@ -4,35 +4,36 @@ gulp-svg-ngmaterial
 Combines Angular Material svg files into an icon set compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
 
 This primarily means for each svg file ...  
-* Stripping all extraneous container information
-* Converting `<symbol>`elements to `<g>` elements
-* Placing all converted `<g>`elements into a `<defs> </defs>` container.  
+* Stripping all extraneous container information so that only viewBox, width and height attributes remain
+* Moves `<svg>`elements or converts to `<g>` or `<symbol>` elements
+* Place all converted elements into a `<defs>...</defs>` container wrapped within a `<svg>` parent.  
 
-NOTE: `<symbol>` elements should be supported since they are more flexible, I have open an issue about this at Angular Material. 
+NOTE: `<svg>` elements are the default since they are the most flexible, `<symbol>` is not yet supported by $mdIconProvider, `<g>` is what you will see in the Angular Material icon sets on github but are the least flexible since they do not support viewBox
 
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
-If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on
+If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on, but at the time I wrote this it did not work properly with $mdIconProvider
 
 NOTE: Tests are not functioning yet, I will get around to this shortly ( which may mean a week or a year ) 
 
 ### Options:
 
 * filename - name of resulting icon set file, if undefined the name of base directory of the first file found
-* removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present
+* contentTransform   
+*   `<svg/>` ( default if nothing is specified ) retains viewBox and height width attriabutes
+*   `<g/>` retains no attributes
+*   `<symbol/>` retains viewBox attriabutes BUT will not curently work with Angular Material  
 
-NOTE: viewBox attributes on `<g>` elements are ignored, so the second option is irrelevant at the moment, if the team producing Angular Materila decides to use the superior ( IMHO ) `<symbol>` element then it might be useful, for now it's just a useless option
 
 ```js
-    { filename  : string (defaults to undefined ), removeViewBox : boolean (defaults to false)}
+    ({ filename  : string (defaults to undefined ), contentTransform : `<svg/>` (default so not actually required)})
 ```
 
 ## Usage
 
+The following script will combine all svg sources into a icon set file with `<svg>` elements moved within the `<defs> </defs>` container after all attributes EXCEPT the viewBox, width, and height attributes IF present, and an id element will be added. 
 
-The following script will combine all svg sources into a icon set file with `<symbol>` elements converted to `<g>` elements which will then be contained within the `<defs> </defs>` container. 
-
-The `id` attribute of the `<g>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
+The `id` attribute of the `<svg>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
 The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`, this can be overriden using options
 
@@ -64,7 +65,7 @@ gulp.task('svgstore', function () {
 });
 ```
 
-### Removing the viewBox attribute and renmaing the output file to icons.svg
+### Renaming the output file to icons.svg
 
 ```js
 
@@ -87,15 +88,14 @@ gulp.task('svgng', function () {
                 }]
             }
         }))
-        .pipe(svgng({filename:"icons.svg",removeViewBox:true}))
+        .pipe(svgng({filename:"icons.svg"))
         .pipe(gulp.dest('test/dest'));
 });
 ```
 
 ### Generating id attributes
 
-Id of each `<g>` element is calculated from file name. Therefore you cannot pass files with the same name,
-because the id's must be unique.
+Id of each `<svg>` ( or containing ) element is calculated from the file name. Therefore you cannot pass files with the same name,because the id's must be unique.
 
 If you need to add a prefix to each id, please use `gulp-rename`:
 
@@ -226,4 +226,6 @@ gulp.task('metadata', function () {
 
 ## Changelog
 Added note about viewBox usage 
+removeViewbox option deprecated, attributes are now stripped according to output type
+contentTransform option now supports '<svg>' output by default to the '<def>...</def>' container
 
