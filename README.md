@@ -18,11 +18,11 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 
 ### Options:
 
-* filename - name of resulting icon set file, if undefined the name of base directory of the first file found
-* contentTransform   
-*   `<svg/>` ( default if nothing is specified ) retains viewBox and height width attriabutes
-*   `<g/>` retains no attributes
-*   `<symbol/>` retains viewBox attriabutes BUT will not curently work with Angular Material  
+* filename - ( string ) name of resulting icon set file, not the path, if undefined the name of base directory of the first file found
+* contentTransform - ( string ) use exactly as specified here if you need to change the default 
+--> `<svg/>` ( default if nothing is specified ) retains viewBox and height width attriabutes
+--> `<g/>` retains no attributes
+--> `<symbol/>` retains viewBox attriabutes BUT will not curently work with Angular Material  
 
 
 ```js
