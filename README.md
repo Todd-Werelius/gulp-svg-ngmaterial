@@ -225,7 +225,7 @@ gulp.task('metadata', function () {
 ```
 
 ## Changelog
-Added note about viewBox usage 
-removeViewbox option deprecated, attributes are now stripped according to output type
-contentTransform option now supports '<svg>' output by default to the '<def>...</def>' container
+* Added note about viewBox usage 
+* removeViewbox option deprecated, attributes are now stripped according to output type
+* contentTransform option now supports '<svg>' output by default to the '<def>...</def>' container
 
