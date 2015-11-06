@@ -3,12 +3,12 @@ gulp-svg-ngmaterial
 
 Combines Angular Material svg files into an icon set compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
 
-Takes each individual svg file the is processed and ...  
+Takes each individual svg file that is processed and ...  
 * Stripping all extraneous container information so that only viewBox, width and height attributes remain
 * Moves `<svg>`elements or converts to `<g>` or `<symbol>` elements
 * Place all converted elements into a `<defs>...</defs>` container wrapped within a `<svg>` parent.  
 
-NOTE: `<svg>` elements are the default since they are the most flexible, `<symbol>` is not yet supported by $mdIconProvider, `<g>` is what you will see in the Angular Material icon sets on github but are the least flexible since they do not support viewBox
+NOTE: `<svg>` elements are the default since they are the most flexible, `<symbol>` is not yet supported by $mdIconProvider, `<g>` is what you will see in the Angular Material icon sets on github but are the least flexible since they do not support viewBox, width, or height forcing you to potentially configure those in both mdIconProvider and css 
 
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
