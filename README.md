@@ -8,22 +8,60 @@ Takes each individual svg file that is processed and ...
 * Moves `<svg>`elements or converts to `<g>` or `<symbol>` elements
 * Place all converted elements into a `<defs>...</defs>` container wrapped within a `<svg>` parent.  
 
-NOTE: `<svg>` elements are the default since they are the most flexible, `<symbol>` is not yet supported by $mdIconProvider, `<g>` is what you will see in the Angular Material icon sets on github but are the least flexible since they do not support viewBox, width, or height forcing you to potentially configure those in both mdIconProvider and css 
+e.g if two files are fed into the module 
 
+`menu.svg`
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path ...>
+</svg>
+```
+`more-vert.svg`
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path...>
+</svg>
+```
+
+The resulting file icons.svg would look something like this... 
+```xml
+<svg>
+  <defs>
+    <svg id="menu" viewBox="0 0 24.00 24.00" width="24" height="24">
+      <path ..."/>
+   </svg>
+   <svg id="more-vert"  viewBox="0 0 24 24" width="24" height="24">
+     <path ..."/>    
+   </svg>
+  </defs>
+</svg>
+```
+Which could then be loaded like this 
+```js
+$mdIconProvider.defaultIconSet('assets/icons.svg');
+```
+and used like this 
+```html
+<md-button class="md-icon-button" aria-label="Navigation">
+  <md-icon style="fill:#5D5D5E;" md-svg-icon="menu"></md-icon>
+</md-button>
+```
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
 If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on, but at the time I wrote this it did not work properly with $mdIconProvider
 
 NOTE: Tests are not functioning yet, I will get around to this shortly ( which may mean a week or a year ) 
 
-### Options:
+### Options object:
 
-* filename - ( string ) name of resulting icon set file, not the path, if undefined the name of base directory of the first file found
-* contentTransform - ( string ) use exactly as specified here if you need to change the default 
---> `<svg/>` ( default if nothing is specified ) retains viewBox and height width attriabutes
---> `<g/>` retains no attributes
---> `<symbol/>` retains viewBox attriabutes BUT will not curently work with Angular Material  
-
+```js
+{ filename         : 'filename.svg', // ( string ) name of resulting icon set file, do include the path! 
+  contentTransform : '<svg/>'        // ( string ) use one of the names below, exactly as specified  
+                 //* `<svg/>`   ( default if nothing is specified ) retains viewBox and height width attriabutes
+                 //* `<g/>`      retains no attributes, not reccomended 
+                 //* `<symbol/>` retains viewBox attributes BUT will not curently work with Angular Material  
+ }
+```
 
 ```js
     ({ filename  : string (defaults to undefined ), contentTransform : `<svg/>` (default so not actually required)})
