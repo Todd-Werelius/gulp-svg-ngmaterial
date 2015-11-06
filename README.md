@@ -6,8 +6,11 @@ Combines svg files into an icon set ( single svg file ) compatible with the Angu
 This allows you to create custom sets of only the icons you need in a single file for performance and ease of use. 
 
 SOURCES FOR Material Design Icons in SVG format 
+
 [3rd Party - System+Xtra Material Design Icons](www.materialdesignicons.com)
+
 [Google - System Only Material Design Icons - website](https://www.google.com/design/icons/) 
+
 [Google - System Only Material Design Icons - github](https://github.com/google/material-design-icons) 
 
 Takes each individual svg file that is processed and ...  
