@@ -1,34 +1,87 @@
 gulp-svg-ngmaterial 
 =============
 
-Combines Angular Material svg files into an icon set compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
+Combines svg files into an icon set ( single svg file ) compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
 
-This primarily means for each svg file ...  
-* Stripping all extraneous container information
-* Converting the `<symbol>`elements to `<g>` elements
-* Placing all converted `<g>`elements into a `<defs> </defs>` container.  
+This allows you to create custom sets of only the icons you need in a single file for performance and ease of use. 
 
+SOURCES FOR Material Design Icons in SVG format 
+
+[3rd Party - System+Xtra Material Design Icons](www.materialdesignicons.com)
+
+[Google - System Only Material Design Icons - website](https://www.google.com/design/icons/) 
+
+[Google - System Only Material Design Icons - github](https://github.com/google/material-design-icons) 
+
+Takes each individual svg file that is processed and ...  
+* Stripping all extraneous container information so that only viewBox, width and height attributes remain
+* Moves `<svg>`elements or converts to `<g>` or `<symbol>` elements
+* Place all converted elements into a `<defs>...</defs>` container wrapped within a `<svg>` parent.  
+
+e.g if two files are fed into the module 
+
+`menu.svg`
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path ...>
+</svg>
+```
+`more-vert.svg`
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path...>
+</svg>
+```
+
+The resulting file icons.svg would look something like this... 
+```xml
+<svg>
+  <defs>
+    <svg id="menu" viewBox="0 0 24.00 24.00" width="24" height="24">
+      <path ..."/>
+   </svg>
+   <svg id="more-vert"  viewBox="0 0 24 24" width="24" height="24">
+     <path ..."/>    
+   </svg>
+  </defs>
+</svg>
+```
+Which could then be loaded like this 
+```js
+$mdIconProvider.defaultIconSet('assets/icons.svg');
+```
+and used like this 
+```html
+<md-button class="md-icon-button" aria-label="Navigation">
+  <md-icon style="fill:#5D5D5E;" md-svg-icon="menu"></md-icon>
+</md-button>
+```
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
 
-If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on
+If your are looking for a more generic method of combining svg's you should look at the [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) plugin that `gulp-svg-ngmaterial` was based on, but at the time I wrote this it did not work properly with $mdIconProvider
 
 NOTE: Tests are not functioning yet, I will get around to this shortly ( which may mean a week or a year ) 
 
-### Options:
-
-* filename - name of resulting icon set file, if undefined the name of base directory of the first file found
-* removeViewBox   - setting to true will remove the viewBox attribute from the `<g>` elements if it is present.
+### Options object:
 
 ```js
-    { filename  : string (defaults to undefined ), removeViewBox : boolean (defaults to false)}
+{ filename         : 'filename.svg', // ( string ) name of resulting icon set file, do include the path! 
+  contentTransform : '<svg/>'        // ( string ) use one of the names below, exactly as specified  
+                 //* `<svg/>`   ( default if nothing is specified ) retains viewBox and height width attriabutes
+                 //* `<g/>`      retains no attributes, not reccomended 
+                 //* `<symbol/>` retains viewBox attributes BUT will not curently work with Angular Material  
+ }
+```
+
+```js
+    ({ filename  : string (defaults to undefined ), contentTransform : `<svg/>` (default so not actually required)})
 ```
 
 ## Usage
 
+The following script will combine all svg sources into a icon set file with `<svg>` elements moved within the `<defs> </defs>` container after all attributes EXCEPT the viewBox, width, and height attributes IF present, and an id element will be added. 
 
-The following script will combine all svg sources into a icon set file with `<symbol>` elements converted to `<g>` elements which will then be contained within the `<defs> </defs>` container. 
-
-The `id` attribute of the `<g>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
+The `id` attribute of the `<svg>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
 The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`, this can be overriden using options
 
@@ -60,7 +113,7 @@ gulp.task('svgstore', function () {
 });
 ```
 
-### Removing the viewBox attribute and renmaing the output file to icons.svg
+### Renaming the output file to icons.svg
 
 ```js
 
@@ -83,15 +136,14 @@ gulp.task('svgng', function () {
                 }]
             }
         }))
-        .pipe(svgng({filename:"icons.svg",removeViewBox:true}))
+        .pipe(svgng({filename:"icons.svg"))
         .pipe(gulp.dest('test/dest'));
 });
 ```
 
 ### Generating id attributes
 
-Id of each `<g>` element is calculated from file name. Therefore you cannot pass files with the same name,
-because the id's must be unique.
+Id of each `<svg>` ( or containing ) element is calculated from the file name. Therefore you cannot pass files with the same name,because the id's must be unique.
 
 If you need to add a prefix to each id, please use `gulp-rename`:
 
@@ -221,5 +273,7 @@ gulp.task('metadata', function () {
 ```
 
 ## Changelog
-
+* Added note about viewBox usage 
+* removeViewbox option deprecated, attributes are now stripped according to output type
+* contentTransform option now supports `<svg>` output by default to the `<def>...</def>` container
 
