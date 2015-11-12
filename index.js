@@ -5,13 +5,17 @@ var Stream = require('stream');
 
 module.exports = function (config) {
 
+  var SYMBOL = '<symbol/>';
+  var SVG    = '<svg/>';
+  var G      = '<g/>';
+
   config = config || {};
 
   var isEmpty = true;
   var fileName = config.filename || undefined;
   var ids = {};
-  var removeViewBox = config.removeViewBox || false;
-  var resultSvg = "<svg><defs/></svg>";
+  var contentTransfrom   = config.contentTransform || SVG;
+  var resultSvg          = "<svg><defs/></svg>";
 
 
   var $ = cheerio.load(resultSvg, { xmlMode: true });
@@ -37,7 +41,11 @@ module.exports = function (config) {
     // The id will equal the file name we are adding in
     var idAttr = path.basename(file.relative, path.extname(file.relative));
     var viewBoxAttr = $svg.attr('viewBox');
-    var $symbol = $('<g/>');
+    var widthAttr   = $svg.attr('width');
+    var heightAttr  = $svg.attr('height');
+
+    var $symbol = $(contentTransfrom);
+    //var $symbol = $('<g/>');
 
     // We cant allow duplicate ID's
     if (idAttr in ids) {
@@ -61,9 +69,18 @@ module.exports = function (config) {
       isEmpty = false
     }
 
+    // Add in only basic attributes that are required dependent on content type
+    // option selected by user, g cannot use viewBox or width/height, symbol cannot
+    // use width height
     $symbol.attr('id', idAttr);
-    if (viewBoxAttr && !removeViewBox) {
+    if (viewBoxAttr && (contentTransfrom === SVG || contentTransfrom == SYMBOL)) {
       $symbol.attr('viewBox', viewBoxAttr)
+    }
+    if (widthAttr && contentTransfrom === SVG) {
+      $symbol.attr('width', widthAttr);
+    }
+    if (heightAttr && contentTransfrom === SVG) {
+      $symbol.attr('height', heightAttr);
     }
 
     $symbol.append($svg.contents());
@@ -84,3 +101,4 @@ module.exports = function (config) {
 
   return stream;
 };
+
