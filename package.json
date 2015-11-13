@@ -1,6 +1,6 @@
 {
   "name": "gulp-svg-ngmaterial",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Combines svg files into an icon set specfically for use with the Angular Material $mdIconProvider service",
   "main": "index.js",
   "files": [
