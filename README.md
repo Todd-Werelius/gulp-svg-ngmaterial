@@ -33,7 +33,7 @@ e.g if two files are fed into the module
 </svg>
 ```
 
-The resulting file icons.svg would look something like this... 
+The resulting file icons.svg would look something like this ( if not compressed ) ... 
 ```xml
 <svg>
   <defs>
