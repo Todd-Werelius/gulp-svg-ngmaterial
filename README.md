@@ -125,7 +125,8 @@ gulp.task('default', function () {
 ### Other patterns used by [gulp-svgstore](https://github.com/w0rm/gulp-svgstore) also work
 
 ## Changelog
-* Added note about viewBox usage 
-* removeViewbox option deprecated, attributes are now stripped according to output type
+* cleaned up docs
 * contentTransform option now supports `<svg>` output by default to the `<def>...</def>` container
+* removeViewbox option deprecated, attributes are now stripped according to output type
+* Added note about viewBox usage 
 
