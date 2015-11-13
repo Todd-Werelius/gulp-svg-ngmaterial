@@ -3,7 +3,7 @@ gulp-svg-ngmaterial
 
 Combines svg files into an icon set ( single svg file ) compatible with the Angular Material frameworks $mdIconProvider service. Derived from [gulp-svgmin](https://github.com/w0rm/gulp-svgstore) and modified for use speficially with Angular Material
 
-This allows you to create custom sets of only the icons you need in a single file for performance and ease of use. 
+This allows you to create custom sets of the icons you need into a single file for performance and ease of use. 
 
 SOURCES FOR Material Design Icons in SVG format 
 
@@ -13,9 +13,9 @@ SOURCES FOR Material Design Icons in SVG format
 
 [Google - System Only Material Design Icons - github](https://github.com/google/material-design-icons) 
 
-Takes each individual svg file that is processed and ...  
-* Stripping all extraneous container information so that only viewBox, width and height attributes remain
-* Moves `<svg>`elements or converts to `<g>` or `<symbol>` elements
+This module takes each individual svg file that it processed and ...  
+* Strips all extraneous container information so that only viewBox, width and height attributes remain
+* Moves `<svg>`elements or converts `<svg>` elements to `<g>` or `<symbol>` elements
 * Place all converted elements into a `<defs>...</defs>` container wrapped within a `<svg>` parent.  
 
 e.g if two files are fed into the module 
@@ -46,14 +46,14 @@ The resulting file icons.svg would look something like this...
   </defs>
 </svg>
 ```
-Which could then be loaded like this 
+Which could then be loaded in an AngularJS modules .config section like this 
 ```js
-$mdIconProvider.defaultIconSet('assets/icons.svg');
+$mdIconProvider.defaultIconSet('icons.svg');
 ```
-and used like this 
+and used in the hmtl like this 
 ```html
 <md-button class="md-icon-button" aria-label="Navigation">
-  <md-icon style="fill:#5D5D5E;" md-svg-icon="menu"></md-icon>
+  <md-icon md-svg-icon="menu"></md-icon>
 </md-button>
 ```
 Read more about using the $mdIconProvider service with icon sets in the [Angular Material Documentaion](https://material.angularjs.org/HEAD/#/api/material.components.icon/service/$mdIconProvider).
@@ -65,28 +65,29 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 ### Options object:
 
 ```js
-{ filename         : 'filename.svg', // ( string ) name of resulting icon set file, do include the path! 
-  contentTransform : '<svg/>'        // ( string ) use one of the names below, exactly as specified  
-                 //* `<svg/>`   ( default if nothing is specified ) retains viewBox and height width attriabutes
+{ filename         : 'filename.svg', // ( string ) name of resulting icon set file, do not include the path! 
+  contentTransform : '<svg/>'        // ( string ) optional --- OR use one of the names below, exactly as specified  
+                 //* `<svg/>`   ( default if nothing is specified ) retains viewBox and height-width attriabutes
                  //* `<g/>`      retains no attributes, not reccomended 
-                 //* `<symbol/>` retains viewBox attributes BUT will not curently work with Angular Material  
+                 //* `<symbol/>` retains viewBox attributes BUT will not curently work with Angular Material   
  }
 ```
 
 ```js
-    ({ filename  : string (defaults to undefined ), contentTransform : `<svg/>` (default so not actually required)})
+    ({ filename  : "somefilename.svg", contentTransform : `<svg/>` (default so not actually required)})
 ```
 
 ## Usage
 
-The following script will combine all svg sources into a icon set file with `<svg>` elements moved within the `<defs> </defs>` container after all attributes EXCEPT the viewBox, width, and height attributes IF present, and an id element will be added. 
+The following gulp script will combine all svg sources into a icon set file with `<svg>` elements moved to  the `<defs> </defs>` container after all attributes EXCEPT the viewBox, width, and height attributes IF present, and add an id element.
 
 The `id` attribute of the `<svg>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
 
-The name of the resulting icon set file will be the base directory name of the first file. A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`, this can be overriden using options
+The name of the resulting icon set file will be the base directory name of the first file if you do not provide a file name in the options object. 
 
-If you have id collisions you can pass the svg files through [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
-to minify the svg and ensure unique ids.
+A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`
+
+### Compact he resulting svg file and avoid name collisions [gulp-svgmin](https://github.com/ben-eb/gulp-svgmin)
 
 ```js
 var gulp = require('gulp');
@@ -94,7 +95,7 @@ var svgng = require('gulp-svg-ngmaterial');
 var svgmin = require('gulp-svgmin');
 var path = require('path');
 
-gulp.task('svgstore', function () {
+gulp.task('build-svgset', function () {
     return gulp
         .src('test/src/*.svg')
         .pipe(svgmin(function (file) {
