@@ -65,29 +65,18 @@ NOTE: Tests are not functioning yet, I will get around to this shortly ( which m
 ### Options object:
 
 ```js
-{ filename         : 'filename.svg', // ( string ) name of resulting icon set file, do not include the path! 
-  contentTransform : '<svg/>'        // ( string ) optional --- OR use one of the names below, exactly as specified  
-                 //* `<svg/>`   ( default if nothing is specified ) retains viewBox and height-width attriabutes
-                 //* `<g/>`      retains no attributes, not reccomended 
-                 //* `<symbol/>` retains viewBox attributes BUT will not curently work with Angular Material   
+{ filename         : 'filename.svg', // ( string ) name of resulting icon set file 
+  contentTransform : '<svg/>'        // ( string ) default --- OR use one of the names below  
+                      //* `<g/>`      retains no attributes, not reccomended 
+                      //* `<symbol/>` retains viewBox BUT Angular Material not currently supporting   
  }
 ```
 
 ```js
-    ({ filename  : "somefilename.svg", contentTransform : `<svg/>` (default so not actually required)})
+ ({ filename  : "somefilename.svg", contentTransform : `<svg/>` [default so not actually required]})
 ```
 
-## Usage
-
-The following gulp script will combine all svg sources into a icon set file with `<svg>` elements created in the `<defs> </defs>` container after all attributes stripped EXCEPT the viewBox, width, and height attributes IF present, and add an id element.
-
-The `id` attribute of the `<svg>` element is set to the name of containing file, duplicate file names are therefore not allowed unless you take special steps to avoid id collision 
-
-The name of the resulting icon set file will be the base directory name of the first file if you do not provide a file name in the options object. 
-
-A `.svg` suffix will be added e.g if the first file was contained within the /somedir/src directory then the file would be name `src.svg`
-
-### Most Common Use
+### Most Common Usage
 * Minimize svg files using gulp-svgmin
 * Strip fill= attribute using gulp-cheerio
 * Combine all svg's into common file/icon set ( this module )
@@ -111,9 +100,9 @@ gulp.task('build-svg-iconset', function () {
 });
 ```
 
-If you need to have nested directories that may have files with the same name, please
-use `gulp-rename`. The following example will concatenate relative path with the name of the file,
-e.g. `src/svg/one/two/three/circle.svg` becomes `one-two-three-circle`.
+If you need to have nested directories that may have files with the same name
+use `gulp-rename`. The following example will concatenate relative path with the
+name of the file e.g. `src/svg/one/two/three/circle.svg` becomes `one-two-three-circle`.
 
 ```js
 var gulp = require('gulp');
