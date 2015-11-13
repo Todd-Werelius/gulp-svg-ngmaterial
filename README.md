@@ -120,6 +120,7 @@ gulp.task('default', function () {
         .pipe(svgng())
         .pipe(gulp.dest('dest'));
 });
+```
 
 ### Other patterns used by [gulp-svgstore](https://github.com/w0rm/gulp-svgstore) also work
 
